@@ -1,5 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
+import errorHandlerMiddleware from '../middleware/errorMiddleware.js';
 
 // this package helps us to get rid of writing try-catch all time in controller.
 // also helps to get our error passed to errorMiddleware..
@@ -24,5 +25,7 @@ import productRouter from './routes/productRouter.js';
 
 //global middleware with url path and route.
 app.use('/api/v1', productRouter);
+
+app.use(errorHandlerMiddleware);
 
 export default app;
