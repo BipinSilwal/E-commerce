@@ -7,14 +7,18 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-      "start": "node server.js",
-      "dev": "SET NODE_ENV=DEVELOPMENT& nodemon backend/server",
-      "prod": "SET NODE_ENV=PRODUCTION& nodemon backend/server"
+    "start": "node server.js",
+    "dev": "SET NODE_ENV=DEVELOPMENT& nodemon backend/server",
+    "prod": "SET NODE_ENV=PRODUCTION& nodemon backend/server",
+    "seeder": "node backend/utils/seeder.js"
   },
   "dependencies": {
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
-    "mongoose": "^6.2.7"
+    "express-async-errors": "^3.1.1",
+    "http-status-codes": "^2.2.0",
+    "mongoose": "^6.2.7",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
