@@ -48,3 +48,20 @@ example: app.get('/', (req,res,next)=>{})
 
 // we use express.Router() to chain route and http method with route handler
 // we create route handler in controller folder and it send back json value.
+
+
+
+//connect Database
+
+we use mongoose package which gives us connect through which we connect
+mongoose cluster to our application.
+mongoose.connect(process.env.URL);
+
+//creating model
+    mongoose.schema(object inside).
+    mongoose.model('model name', schema)
+
+
+for sample Database
+
+we use insertMany and deleteMany method given by mongoose..
