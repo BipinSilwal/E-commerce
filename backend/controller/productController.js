@@ -1,11 +1,16 @@
 import { StatusCodes } from 'http-status-codes';
 import { NotFoundError } from '../../errors/not-found.js';
+import { BadRequestError } from '../../errors/bad-request.js';
 import Product from '../model/productModel.js';
 
 //creating new Product => /api/v1/product/new
 
 export const createProduct = async (req, res, next) => {
   const product = await Product.create(req.body);
+
+  if (!name || !description || !image) {
+    throw new BadRequestError('Please provide all the values');
+  }
 
   res.status(StatusCodes.CREATED).json({
     success: true,
