@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import { NotFoundError } from '../../errors/not-found.js';
 import { BadRequestError } from '../../errors/bad-request.js';
 import Product from '../model/productModel.js';
+import { apiFeatures } from '../utils/apiFeatures.js';
 
 //creating new Product => /api/v1/product/new
 
@@ -21,9 +22,20 @@ export const createProduct = async (req, res, next) => {
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 export const getProducts = async (req, res) => {
-  const products = await Product.find();
+  const totalProducts = await Product.countDocuments();
+  const limit = 3;
+  const apiFeature = new apiFeatures(Product.find(), req.query)
+    .searching()
+    .filter()
+    .pagination(limit);
+
+  // here apiFeature is 'this' return from function inside apiFeatures
+  // apiFeature has access to properties and method so we called query properties.
+  const products = await apiFeature.query;
+
   res.status(StatusCodes.OK).json({
     success: true,
+    totalProducts,
     productCount: products.length,
     products,
   });

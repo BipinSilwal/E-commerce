@@ -65,3 +65,19 @@ mongoose.connect(process.env.URL);
 for sample Database
 
 we use insertMany and deleteMany method given by mongoose..
+
+// Error middleware
+
+creating error middleware with (err, req,res,next);
+
+whatever the error occurs in controller we call it 
+in error middleware
+
+
+err has properties such as name, message, statuscode &stack
+
+error stack is send in developer and only error message 
+is send to the user.
+
+error name, validationError, castError
+
