@@ -66,3 +66,15 @@ export const login = async (req, res) => {
   // if password is correct, send token.
   sendToken(user, StatusCodes.OK, res);
 };
+
+export const logout = async (req, res) => {
+  const options = {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  };
+
+  res.status(StatusCodes.OK).cookie('token', null, options).json({
+    success: true,
+    message: 'Logged Out!!!',
+  });
+};

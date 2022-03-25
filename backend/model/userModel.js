@@ -55,12 +55,14 @@ userSchema.pre('save', async function (next) {
 });
 
 userSchema.methods.getJwtToken = function () {
+  // jwt helps to create token..
   return jwt.sign({ userId: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.EXPIRES_DATE,
   });
 };
 
 userSchema.methods.comparePassword = async function (clientPassword) {
+  // comparing client password with database stored password
   return await bcrypt.compare(clientPassword, this.password);
 };
 
