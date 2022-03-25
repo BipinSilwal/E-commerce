@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import { BadRequestError } from '../../errors/bad-request.js';
 import { NotFoundError } from '../../errors/not-found.js';
 import User from '../model/userModel.js';
+import { sendToken } from '../utils/sendToken.js';
 
 export const signUp = async (req, res) => {
   // we get input from the client.
@@ -31,38 +32,49 @@ export const signUp = async (req, res) => {
     },
   });
 
-  const token = user.getJwtToken();
-
-  res.status(StatusCodes.CREATED).json({
-    success: true,
-    token,
-  });
+  // sending token to user...
+  sendToken(user, StatusCodes.CREATED, res);
 };
 
+//.............................................Login...........................
+
 export const login = async (req, res) => {
+  // get input from client
   const { email, password } = req.body;
 
+  // no input throw error.
   if (!email || !password) {
     throw new BadRequestError('Please provide all the value');
   }
 
+  // now check email and password in the database.
+  // select is false for password so we need to select password as well..
   const user = await User.findOne({ email }).select('+password');
 
+  // email or password is wrong..
   if (!user) {
     throw new NotFoundError('Invalid Email or Password!!');
   }
 
+  // now if comparing client password with database password
   const isPasswordMatched = await user.comparePassword(password);
 
+  // throw error if not matched.
   if (!isPasswordMatched) {
     throw new NotFoundError('Invalid Email or Password');
   }
+  // if password is correct, send token.
+  sendToken(user, StatusCodes.OK, res);
+};
 
-  const token = user.getJwtToken();
+export const logout = async (req, res) => {
+  const options = {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  };
 
-  res.status(StatusCodes.OK).json({
+  res.status(StatusCodes.OK).cookie('token', null, options).json({
     success: true,
-    user,
-    token,
+    message: 'Logged Out!!!',
   });
 };

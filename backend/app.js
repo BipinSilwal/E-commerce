@@ -1,5 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
 import errorHandlerMiddleware from '../middleware/errorMiddleware.js';
 
 // this package helps us to get rid of writing try-catch all time in controller.
@@ -15,7 +16,7 @@ if (process.env.NODE_ENV !== 'PRODUCTION') {
   app.use(morgan('dev'));
 }
 app.use(express.json()); // when json is send from the user it helps to get those json-data in the server..
-
+app.use(cookieParser()); // to get cookie data from client we uses it.
 // all imported Routes here.
 import productRouter from './routes/productRouter.js';
 import userRouter from './routes/userRouter.js';
