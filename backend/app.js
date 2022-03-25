@@ -18,6 +18,7 @@ app.use(express.json()); // when json is send from the user it helps to get thos
 
 // all imported Routes here.
 import productRouter from './routes/productRouter.js';
+import userRouter from './routes/userRouter.js';
 
 //app.use global middleware called every time request is send to the server.
 // use knows which http method is being requested.. there is no specify of method.
@@ -25,6 +26,7 @@ import productRouter from './routes/productRouter.js';
 
 //global middleware with url path and route.
 app.use('/api/v1', productRouter);
+app.use('/api/v1', userRouter);
 
 app.use(errorHandlerMiddleware);
 
