@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const productSchema = new mongoose.Schema({
-  name: {
+  names: {
     type: String,
     required: [true, 'Please enter product Name'],
     trim: true,
@@ -53,6 +53,11 @@ const productSchema = new mongoose.Schema({
         'Home',
       ],
       message: 'Please select correct category for product',
+    },
+    createdBy: {
+      type: mongoose.Types.ObjectId,
+      ref: 'User',
+      required: [true, 'Please provide user'],
     },
     reviews: [
       {

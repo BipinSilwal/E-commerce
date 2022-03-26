@@ -56,6 +56,8 @@ userSchema.pre('save', async function (next) {
 
 userSchema.methods.getJwtToken = function () {
   // jwt helps to create token..
+  // userId helps for authentication and authorization.
+  // we create req.user which can be accessed by the middleware.
   return jwt.sign({ userId: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.EXPIRES_DATE,
   });

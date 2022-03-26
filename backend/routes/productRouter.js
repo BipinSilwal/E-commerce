@@ -1,5 +1,8 @@
 import express from 'express';
-import { isAuthenticatedUser } from '../../middleware/authentication.js';
+import {
+  isAuthenticatedUser,
+  isAuthorized,
+} from '../../middleware/authentication.js';
 import {
   createProduct,
   deleteProducts,
@@ -12,12 +15,14 @@ import {
 const productRouter = express.Router();
 
 // chaining is done here with route handler.
-productRouter.route('/admin/product/new').post(createProduct);
-productRouter.route('/products').get(isAuthenticatedUser, getProducts);
+productRouter
+  .route('/admin/product/new')
+  .post(isAuthenticatedUser, isAuthorized('admin'), createProduct);
+productRouter.route('/products').get(getProducts);
 productRouter.route('/products/:id').get(singleProduct);
 productRouter
   .route('/admin/products/:id')
-  .patch(updateProducts)
-  .delete(deleteProducts);
+  .patch(isAuthenticatedUser, isAuthorized('admin'), updateProducts)
+  .delete(isAuthenticatedUser, isAuthorized('admin'), deleteProducts);
 
 export default productRouter;

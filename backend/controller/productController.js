@@ -7,11 +7,22 @@ import { apiFeatures } from '../utils/apiFeatures.js';
 //creating new Product => /api/v1/product/new
 
 export const createProduct = async (req, res, next) => {
-  const product = await Product.create(req.body);
+  const { names, description, images } = req.body;
 
-  if (!name || !description || !image) {
+  if (!names || !description || !images) {
     throw new BadRequestError('Please provide all the values');
   }
+  // creating user object so that we can have properties of user logged in Id.
+
+  // in authentication we are creating req object key "user" which will have
+  //userId from token.
+
+  req.body.createdBy = req.user._id; // this is id of the user. without this we cannot create product..
+  console.log(req.body.createdBy);
+
+  const product = await Product.create(req.body);
+
+  console.log(product);
 
   res.status(StatusCodes.CREATED).json({
     success: true,

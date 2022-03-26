@@ -15,11 +15,27 @@ export const isAuthenticatedUser = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // req object has access to the user object through we add jwt verified token id in it.
-    req.user = { userId: decoded.userId };
+    // req object create user object through we add jwt verified token id in it.
+    req.user = await User.findById(decoded.userId);
+    console.log(req.user._id);
   } catch (error) {
     throw new UnauthorizedError('Authentication Invalid!!');
   }
 
   next();
+};
+// getting roles from router.
+export const isAuthorized = (...roles) => {
+  // roles is an array..
+  // check roles is true or false.
+  return (req, res, next) => {
+    // roles doesn't match it become true and throw error..
+    if (!roles.includes(req.user.role)) {
+      throw new UnauthorizedError(
+        `Role ${req.user.role} is not allowed to access this resource..`
+      );
+    }
+    // if its okay. we send to other middleware..
+    next();
+  };
 };
