@@ -27,6 +27,21 @@ const errorHandlerMiddleware = (err, req, res, next) => {
         .join(',');
     }
 
+    if (err.code === 1100) {
+      defaultError.StatusCode = StatusCodes.BAD_REQUEST;
+      defaultError.msg = ` Duplicate ${Object.keys(err.keyValue)} entered `;
+    }
+
+    if (err.name === 'JsonWebTokenError') {
+      defaultError.StatusCode = StatusCodes.BAD_REQUEST;
+      defaultError.msg = `Json web Token is Invalid. Try Again!!! `;
+    }
+
+    if (err.name === 'TokenExpiredError') {
+      defaultError.StatusCode = StatusCodes.BAD_REQUEST;
+      defaultError.msg = `JSON web Token is expired. Try Again!!! `;
+    }
+
     res
       .status(defaultError.StatusCode)
       .json({ success: 'false', msg: defaultError.msg });
