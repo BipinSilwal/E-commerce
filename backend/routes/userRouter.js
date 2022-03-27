@@ -7,7 +7,11 @@ import {
   signUp,
 } from '../controller/authController.js';
 import {
+  getAllUsers,
+  getUserDetails,
   getUserProfile,
+  updateUsers,
+  deleteUsers,
   updateUserPassword,
   updateUserProfile,
 } from '../controller/userController.js';
@@ -31,5 +35,13 @@ userRouter
   .route('/password/update')
   .put(isAuthenticatedUser, updateUserPassword);
 userRouter.route('/profile/update').put(isAuthenticatedUser, updateUserProfile);
+userRouter
+  .route('/admin/alluser')
+  .get(isAuthenticatedUser, isAuthorized('admin'), getAllUsers);
+userRouter
+  .route('/admin/user/:id')
+  .get(isAuthenticatedUser, isAuthorized('admin'), getUserDetails)
+  .patch(isAuthenticatedUser, isAuthorized('admin'), updateUsers)
+  .delete(isAuthenticatedUser, isAuthorized('admin'), deleteUsers);
 
 export default userRouter;
