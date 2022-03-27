@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import User from '../backend/model/userModel.js';
+import User from '../model/userModel.js';
 import { UnauthorizedError } from '../errors/unauthorized-error.js';
 
 export const isAuthenticatedUser = async (req, res, next) => {
@@ -17,7 +17,6 @@ export const isAuthenticatedUser = async (req, res, next) => {
 
     // req object create user object through we add jwt verified token id in it.
     req.user = await User.findById(decoded.userId);
-   console.log(req.user);
   } catch (error) {
     throw new UnauthorizedError('Authentication Invalid!!');
   }

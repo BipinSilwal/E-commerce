@@ -1,7 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
-import errorHandlerMiddleware from '../middleware/errorMiddleware.js';
+import errorHandlerMiddleware from './middleware/errorMiddleware.js';
 
 // this package helps us to get rid of writing try-catch all time in controller.
 // also helps to get our error passed to errorMiddleware..

@@ -2,7 +2,7 @@ import express from 'express';
 import {
   isAuthenticatedUser,
   isAuthorized,
-} from '../../middleware/authentication.js';
+} from '../middleware/authentication.js';
 import {
   createProduct,
   deleteProducts,
