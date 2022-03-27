@@ -17,7 +17,7 @@ export const isAuthenticatedUser = async (req, res, next) => {
 
     // req object create user object through we add jwt verified token id in it.
     req.user = await User.findById(decoded.userId);
-    console.log(req.user._id);
+   console.log(req.user);
   } catch (error) {
     throw new UnauthorizedError('Authentication Invalid!!');
   }
