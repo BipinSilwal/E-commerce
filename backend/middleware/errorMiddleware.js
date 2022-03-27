@@ -27,7 +27,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
         .join(',');
     }
 
-    if (err.code === 1100) {
+    if (erro.code && err.code === 11000) {
       defaultError.StatusCode = StatusCodes.BAD_REQUEST;
       defaultError.msg = ` Duplicate ${Object.keys(err.keyValue)} entered `;
     }

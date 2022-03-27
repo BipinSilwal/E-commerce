@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
-import { NotFoundError } from '../../errors/not-found.js';
-import { BadRequestError } from '../../errors/bad-request.js';
+import { NotFoundError } from '../errors/not-found.js';
+import { BadRequestError } from '../errors/bad-request.js';
 import Product from '../model/productModel.js';
 import { apiFeatures } from '../utils/apiFeatures.js';
 
