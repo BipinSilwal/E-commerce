@@ -20,6 +20,7 @@ app.use(cookieParser()); // to get cookie data from client we uses it.
 // all imported Routes here.
 import productRouter from './routes/productRouter.js';
 import userRouter from './routes/userRouter.js';
+import orderRouter from './routes/orderRouter.js';
 
 //app.use global middleware called every time request is send to the server.
 // use knows which http method is being requested.. there is no specify of method.
@@ -28,6 +29,7 @@ import userRouter from './routes/userRouter.js';
 //global middleware with url path and route.
 app.use('/api/v1', productRouter);
 app.use('/api/v1', userRouter);
+app.use('/api/v1', orderRouter);
 
 app.use(errorHandlerMiddleware);
 

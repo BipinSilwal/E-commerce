@@ -35,6 +35,9 @@ userRouter
   .route('/password/update')
   .put(isAuthenticatedUser, updateUserPassword);
 userRouter.route('/profile/update').put(isAuthenticatedUser, updateUserProfile);
+
+//admin
+
 userRouter
   .route('/admin/alluser')
   .get(isAuthenticatedUser, isAuthorized('admin'), getAllUsers);
