@@ -41,10 +41,9 @@ export class apiFeatures {
     let queryStr = JSON.stringify(queryCopy);
 
     // adding $ sign in string so that again when we find it in database
-    //we change it to object.
 
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (match) => `$${match}`);
-
+    //we change it to object.
     this.query = this.query.find(JSON.parse(queryStr));
     return this;
   }
