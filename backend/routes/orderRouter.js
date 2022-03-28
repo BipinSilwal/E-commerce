@@ -1,5 +1,9 @@
 import express from 'express';
-import { newOrder } from '../controller/orderController.js';
+import {
+  getSingleOrder,
+  myOrder,
+  newOrder,
+} from '../controller/orderController.js';
 import {
   isAuthenticatedUser,
   isAuthorized,
@@ -7,6 +11,9 @@ import {
 
 const orderRouter = express.Router();
 
+// all done by client...
 orderRouter.route('/order/new').post(isAuthenticatedUser, newOrder);
+orderRouter.route('/order/:id').get(isAuthenticatedUser, getSingleOrder);
+orderRouter.route('/orders/me').get(isAuthenticatedUser, myOrder);
 
 export default orderRouter;
