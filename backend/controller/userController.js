@@ -76,7 +76,7 @@ export const getAllUsers = async (req, res) => {
 // .................................................... each user details.................................................................
 
 export const getUserDetails = async (req, res) => {
-  // when admin looks for each user.
+  // when admin click  on particular user.
   const user = await User.findById(req.params.id);
 
   // throw error if not found...
