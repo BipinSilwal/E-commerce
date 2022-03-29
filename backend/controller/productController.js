@@ -115,3 +115,88 @@ export const deleteProducts = async (req, res) => {
     message: `deleted product!!`,
   });
 };
+
+//.............................Reviews..........................
+
+export const createReview = async (req, res) => {
+  const { rating, comment, productId } = req.body;
+
+  const review = {
+    createdBy: req.user._id,
+    name: req.user.userName,
+    rating: Number(rating),
+    comment,
+  };
+
+  const product = await Product.findById(productId);
+
+  const isReviewed = product.reviews.find(
+    (r) => r.createdBy.toString() === req.user._id.toString()
+  );
+
+  if (isReviewed) {
+    product.reviews.forEach((rev) => {
+      if (rev.createdBy.toString() === req.user._id.toString()) {
+        rev.comment = comment;
+        rev.rating = rating;
+      }
+    });
+  } else {
+    product.reviews.push(review);
+    product.numOfReviews = product.reviews.length;
+  }
+
+  product.rating =
+    product.reviews.reduce((totalRating, item) => {
+      return (totalRating += item.rating);
+    }, 0) / product.reviews.length;
+
+  await product.save({ validateBeforeSave: false });
+
+  res.status(StatusCodes.OK).json({
+    success: true,
+    message: `review was successfully created..`,
+  });
+};
+
+export const getProductReviews = async (req, res) => {
+  const product = await Product.findById(req.query.id);
+
+  res.status(StatusCodes.OK).json({
+    success: true,
+    reviews: product.reviews,
+  });
+};
+
+export const deleteProductReviews = async (req, res) => {
+  const product = await Product.findById(req.query.productId);
+
+  const reviews = product.reviews.filter(
+    (review) => review._id.toString() !== req.query.id.toString()
+  );
+
+  const numOfReviews = reviews.length;
+
+  const rating =
+    product.reviews.reduce((totalRating, item) => {
+      return (totalRating += item.rating);
+    }, 0) / reviews.length;
+
+  await Product.findByIdAndUpdate(
+    req.query.id,
+    {
+      reviews,
+      rating,
+      numOfReviews,
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  res.status(StatusCodes.OK).json({
+    success: true,
+    reviews: product.reviews,
+  });
+};
