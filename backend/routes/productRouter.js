@@ -27,6 +27,8 @@ productRouter
   .route('/admin/products/:id')
   .patch(isAuthenticatedUser, isAuthorized('admin'), updateProducts)
   .delete(isAuthenticatedUser, isAuthorized('admin'), deleteProducts);
+
+// reviews.....
 productRouter.route('/review').patch(isAuthenticatedUser, createReview);
 productRouter.route('/review').get(isAuthenticatedUser, getProductReviews);
 productRouter.route('/review').get(isAuthenticatedUser, deleteProductReviews);
