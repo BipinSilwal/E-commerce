@@ -34,7 +34,7 @@ export const createProduct = async (req, res, next) => {
 
 export const getProducts = async (req, res) => {
   const totalProducts = await Product.countDocuments();
-  const limit = 3;
+  const limit = 8;
   const apiFeature = new apiFeatures(Product.find(), req.query)
     .searching()
     .filter()
