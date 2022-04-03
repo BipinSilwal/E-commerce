@@ -22,7 +22,7 @@ productRouter
   .route('/admin/product/new')
   .post(isAuthenticatedUser, isAuthorized('admin'), createProduct);
 productRouter.route('/products').get(getProducts);
-productRouter.route('/products/:id').get(singleProduct);
+productRouter.route('/product/:id').get(singleProduct);
 productRouter
   .route('/admin/products/:id')
   .patch(isAuthenticatedUser, isAuthorized('admin'), updateProducts)

@@ -1,51 +1,48 @@
 import React, { useEffect } from 'react';
 import Metadata from '../components/Layouts/Metadata';
-import { Link } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProduct } from '../Redux/Action/productAction';
+import ProductCard from '../components/card/ProductCard';
+import Loader from '../components/Loader';
+import { useAlert } from 'react-alert';
 const Home = () => {
-  const { names, price, ratings, images } = useSelector(
+  const { isLoading, products, error, totalProducts } = useSelector(
     (state) => state.products
   );
 
+  const alert = useAlert();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllProduct());
-  }, [dispatch]);
+
+    if (error) {
+      alert.error(error);
+    }
+  }, [dispatch, alert, error]);
 
   return (
     <>
-      <Metadata title="Best Buy products" />
-      <div className="container container-fluid">
-        <h1 id="products_heading">Latest Products</h1>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <Metadata title="Best Buy products" />
+          <div className="container container-fluid">
+            <h1 id="products_heading">Latest Products</h1>
 
-        <section id="products" className="container mt-5">
-          <div className="row">
-            <div className="col-sm-12 col-md-6 col-lg-3 my-3">
-              <div className="card p-3 rounded">
-                <img
-                  className="card-img-top mx-auto"
-                  src="{images.url}"
-                  alt="products"
-                />
-                <div className="card-body d-flex flex-column">
-                  <h5 className="card-title">{names}</h5>
-                  <div className="ratings mt-auto">
-                    <div className="rating-outer">
-                      <div className="rating-inner"></div>
-                    </div>
-                    <span id="no_of_reviews">{ratings}</span>
-                  </div>
-                  <p className="card-text">{price}</p>
-                  <Link to="/"> View Details</Link>
-                </div>
+            <section id="products" className="container mt-5">
+              <div className="row">
+                {products &&
+                  products.map((product) => (
+                    <ProductCard key={product._id} {...product} />
+                  ))}
               </div>
-            </div>
+            </section>
           </div>
-        </section>
-      </div>
+        </>
+      )}
     </>
   );
 };
