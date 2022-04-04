@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import Loader from '../components/Loader';
 import { clearErrors, oneProduct } from '../Redux/Action/productAction';
 import { Carousel } from 'react-bootstrap';
+import Metadata from '.././components/Layouts/Metadata';
 
 const SingleProduct = () => {
   const { id } = useParams();
@@ -30,6 +31,7 @@ const SingleProduct = () => {
 
   return (
     <>
+      <Metadata title={product.names} />
       {isLoading ? (
         <Loader />
       ) : (

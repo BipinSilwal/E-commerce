@@ -1,10 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const ProductCard = ({ _id, images, names, ratings, numOfReviews, price }) => {
+const ProductCard = ({
+  _id,
+  images,
+  names,
+  ratings,
+  numOfReviews,
+  price,
+  col,
+}) => {
   return (
     <>
-      <div key={_id} className="col-sm-12 col-md-6 col-lg-3 my-3">
+      <div key={_id} className={`col-sm-12 col-md-6 col-lg-${col} my-3`}>
         <div className="card p-3 rounded">
           <img
             className="card-img-top mx-auto"
@@ -20,7 +28,9 @@ const ProductCard = ({ _id, images, names, ratings, numOfReviews, price }) => {
                 <div
                   className="rating-inner"
                   style={{ width: `${(ratings / 5) * 100}%` }}
-                ></div>
+                >
+                  {ratings}
+                </div>
               </div>
               <span id="no_of_reviews">({numOfReviews}Reviews)</span>
             </div>
