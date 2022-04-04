@@ -25,8 +25,6 @@ const Home = () => {
 
   const { keyword } = useParams();
 
-  console.log(keyword);
-
   const { isLoading, products, error, totalProducts, limit, productCount } =
     useSelector((state) => state.products);
 
