@@ -1,8 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Search from './Search';
 
 const Header = () => {
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
   return (
     <>
       <nav className="navbar row">
@@ -19,9 +22,11 @@ const Header = () => {
         </div>
 
         <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
-          <button className="btn" id="login_btn">
-            Login
-          </button>
+          <Link to="/login">
+            <button className="btn" id="login_btn">
+              {isAuthenticated ? 'Logout' : 'Login'}
+            </button>
+          </Link>
 
           <span id="cart" className="ml-3">
             Cart
