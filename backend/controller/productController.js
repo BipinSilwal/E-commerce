@@ -34,20 +34,25 @@ export const createProduct = async (req, res, next) => {
 
 export const getProducts = async (req, res) => {
   const totalProducts = await Product.countDocuments();
-  const limit = 8;
+  const limit = 4;
   const apiFeature = new apiFeatures(Product.find(), req.query)
     .searching()
-    .filter()
-    .pagination(limit);
+    .filter();
 
   // here apiFeature is 'this' return from function inside apiFeatures
   // apiFeature has access to properties and method so we called query properties.
-  const products = await apiFeature.query;
+  let products = apiFeature.query;
+
+  let filteredProductsCount = products.length;
+
+  apiFeature.pagination(limit);
+  products = await apiFeature.query;
 
   res.status(StatusCodes.OK).json({
     success: true,
     totalProducts,
-    productCount: products.length,
+    limit,
+    productCount: filteredProductsCount,
     products,
   });
 };

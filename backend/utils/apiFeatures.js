@@ -1,31 +1,33 @@
 export class apiFeatures {
   // creating object of apiFeatures in controller,
-  constructor(query, qryStr) {
+  constructor(query, queryStr) {
     this.query = query; // Product.find()return properties and method in object.
-    this.qryStr = qryStr; // req.query return object from url
+    this.queryStr = queryStr; // req.query return object from url
   }
 
   searching() {
-    const search = this.qryStr.search
+    const searches = this.queryStr.search
       ? {
-          name: {
+          names: {
             //regex is given by mongo to find the value, and &option i means its insensitive.. (doesn't care about capital or small letter )
-            $regex: this.qryStr.search,
+            $regex: this.queryStr.search,
             $options: 'i',
           },
         }
       : {};
 
+    console.log(searches);
+
     // this.query object is changed again with find method it provide.
 
-    this.query = this.query.find({ ...search }); // {name:{$regex: value, $options:'i'}}
+    this.query = this.query.find({ ...searches }); // {name:{$regex: value, $options:'i'}}
 
     return this;
   }
 
   filter() {
     // make copy of req.query(all the object)
-    const queryCopy = { ...this.qryStr };
+    const queryCopy = { ...this.queryStr };
 
     // if its between this value then eliminate them
     const removeFields = ['search', 'limit', 'page'];
@@ -49,7 +51,7 @@ export class apiFeatures {
   }
 
   pagination(limit) {
-    const currentPage = Number(this.qryStr.page) || 1;
+    const currentPage = Number(this.queryStr.page) || 1;
 
     const skip = limit * (currentPage - 1);
 
