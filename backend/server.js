@@ -1,6 +1,7 @@
 import app from './app.js';
 import dotenv from 'dotenv';
 import connectDb from './config/dbConnection.js';
+import cloudinary from 'cloudinary';
 
 // handle Uncaught exceptions.
 process.on('uncaughtException', (err) => {
@@ -14,6 +15,13 @@ dotenv.config({ path: 'backend/config/config.env' });
 
 //connection with mongo database..
 connectDb();
+
+// cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_CLOUD_API_KEY,
+  api_secret: process.env.CLOUDINARY_CLOUD_API_SECRET,
+});
 
 // process is global just like window in nodejs which can be accessed from any module.
 const server = app.listen(process.env.PORT, () => {
