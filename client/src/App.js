@@ -9,6 +9,8 @@ import Login from './pages/authentication/Login';
 import SignUp from './pages/authentication/SignUp';
 import store from './store';
 import { loadUser } from './Redux/Action/userAction';
+import Profile from './pages/authentication/Profile';
+import ProtectedRoute from './pages/authentication/ProtectedRoute';
 
 const App = () => {
   useEffect(() => {
@@ -20,10 +22,20 @@ const App = () => {
       <BrowserRouter>
         <Header />
         <Routes>
+          <Route
+            path="/me"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+
           <Route path="/" element={<Home />} />
           <Route path="/search/:keyword" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+
           <Route path="/product/:id" element={<SingleProduct />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
