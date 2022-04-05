@@ -5,8 +5,18 @@ import User from '../model/userModel.js';
 import { sendEmail } from '../utils/sendEmail.js';
 import { sendToken } from '../utils/sendToken.js';
 import crypto from 'crypto';
+import cloudinary from 'cloudinary';
 
 export const signUp = async (req, res) => {
+  // incase of cloudinary we get avatar from the client ..
+
+  //result is an object
+  const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+    folder: 'avatars',
+    width: 150,
+    crop: 'scale',
+  });
+
   // we get input from the client.
   const { userName, email, password } = req.body;
 
@@ -28,9 +38,8 @@ export const signUp = async (req, res) => {
     email,
     password,
     avatar: {
-      public_id:
-        'avatars/profile-portrait-extremely-happy-african-man-with-dreadlocks-looking-picture-id1278744283_piaozp.jpg',
-      url: 'https://res.cloudinary.com/dzj7yvpje/image/upload/v1633770167/avatars/profile-portrait-extremely-happy-african-man-with-dreadlocks-looking-picture-id1278744283_piaozp.jpg',
+      public_id: result.public_id,
+      url: result.secure_url,
     },
   });
 
