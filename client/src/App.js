@@ -11,6 +11,7 @@ import store from './store';
 import { loadUser } from './Redux/Action/userAction';
 import Profile from './pages/authentication/Profile';
 import ProtectedRoute from './pages/authentication/ProtectedRoute';
+import UpdateProfile from './pages/authentication/UpdateProfile';
 
 const App = () => {
   useEffect(() => {
@@ -35,8 +36,8 @@ const App = () => {
           <Route path="/search/:keyword" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-
           <Route path="/product/:id" element={<SingleProduct />} />
+          <Route path="/profile/update" element={<UpdateProfile />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
         <Footer />
