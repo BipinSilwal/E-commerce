@@ -57,7 +57,7 @@ const Header = () => {
                     className="rounded-circle"
                   />
                 </figure>
-                <span>{user && user.name}</span>
+                <span>{user && user.userName}</span>
               </Link>
 
               <div

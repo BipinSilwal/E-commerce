@@ -12,6 +12,9 @@ import {
   SIGNUP_BEGIN,
   SIGNUP_FAIL,
   SIGNUP_SUCCESS,
+  USER_PROFILE_BEGIN,
+  USER_PROFILE_FAIL,
+  USER_PROFILE_SUCCESS,
 } from '../constant/userConstant';
 
 export const loginUser = (currentUser) => {
@@ -79,6 +82,29 @@ export const loadUser = () => {
     } catch (error) {
       dispatch({
         type: LOAD_USER_FAIL,
+        payload: error.response.data.msg,
+      });
+    }
+  };
+};
+export const profileUpdate = (userData) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: USER_PROFILE_BEGIN,
+      });
+
+      const { data } = await axios.put('/api/v1/profile/update', userData);
+
+      console.log(data);
+
+      dispatch({
+        type: USER_PROFILE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: USER_PROFILE_FAIL,
         payload: error.response.data.msg,
       });
     }
