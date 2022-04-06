@@ -12,6 +12,7 @@ import { loadUser } from './Redux/Action/userAction';
 import Profile from './pages/authentication/Profile';
 import ProtectedRoute from './pages/authentication/ProtectedRoute';
 import UpdateProfile from './pages/authentication/UpdateProfile';
+import UpdatePassword from './pages/authentication/UpdatePassword';
 
 const App = () => {
   useEffect(() => {
@@ -38,6 +39,7 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/product/:id" element={<SingleProduct />} />
           <Route path="/profile/update" element={<UpdateProfile />} />
+          <Route path="/password/update" element={<UpdatePassword />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
         <Footer />
