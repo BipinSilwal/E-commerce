@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import { NotFoundError } from '../errors/not-found.js';
 import User from '../model/userModel.js';
 import { sendToken } from '../utils/sendToken.js';
+import cloudinary from 'cloudinary';
 
 // Which user or client can have access...............................
 export const getUserProfile = async (req, res) => {
@@ -42,6 +43,31 @@ export const updateUserProfile = async (req, res) => {
   const newUserData = {
     userName: req.body.userName,
     email: req.body.email,
+  };
+
+  // if user upload picture
+  if (req.body.avatar !== '') {
+    // we look through user Id.
+    const user = await User.findById(req.body.id);
+
+    // we get image Id.
+    const image_id = user.avatar.public_id;
+
+    // now destroy previously found image..
+    const res = await cloudinary.v2.uploader.destroy(image_id);
+
+    // add new image uploaded by user..
+    const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+      folder: 'avatars',
+      width: 150,
+      crop: 'scale',
+    });
+  }
+
+  // now create new object called avatar to add image id and url..
+  newUserData.avatar = {
+    public_id: result.public_id,
+    ulr: result.secure_url,
   };
 
   // if userId matches then we can update our userProfile

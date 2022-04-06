@@ -11,6 +11,10 @@ import {
   SIGNUP_BEGIN,
   SIGNUP_FAIL,
   SIGNUP_SUCCESS,
+  USER_PASSWORD_BEGIN,
+  USER_PASSWORD_FAIL,
+  USER_PASSWORD_RESET,
+  USER_PASSWORD_SUCCESS,
   USER_PROFILE_BEGIN,
   USER_PROFILE_FAIL,
   USER_PROFILE_RESET,
@@ -82,11 +86,13 @@ export const userReducer = (state = { user: {} }, action) => {
 export const profileReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_PROFILE_BEGIN:
+    case USER_PASSWORD_BEGIN:
       return {
         ...state,
         isLoading: true,
       };
     case USER_PROFILE_SUCCESS:
+    case USER_PASSWORD_SUCCESS:
       return {
         ...state,
         isLoading: false,
@@ -94,16 +100,24 @@ export const profileReducer = (state = {}, action) => {
         message: action.payload.message,
       };
     case USER_PROFILE_RESET:
+    case USER_PASSWORD_RESET:
       return {
         ...state,
         isLoading: false,
         isUpdated: false,
       };
     case USER_PROFILE_FAIL:
+    case USER_PASSWORD_FAIL:
       return {
         ...state,
         isLoading: false,
         error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
       };
 
     default:

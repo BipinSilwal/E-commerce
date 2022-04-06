@@ -12,6 +12,9 @@ import {
   SIGNUP_BEGIN,
   SIGNUP_FAIL,
   SIGNUP_SUCCESS,
+  USER_PASSWORD_BEGIN,
+  USER_PASSWORD_FAIL,
+  USER_PASSWORD_SUCCESS,
   USER_PROFILE_BEGIN,
   USER_PROFILE_FAIL,
   USER_PROFILE_SUCCESS,
@@ -87,6 +90,31 @@ export const loadUser = () => {
     }
   };
 };
+
+export const passwordUpdate = (userData) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: USER_PASSWORD_BEGIN,
+      });
+
+      const { data } = await axios.put('/api/v1/password/update', userData);
+
+      console.log(data);
+
+      dispatch({
+        type: USER_PASSWORD_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: USER_PASSWORD_FAIL,
+        payload: error.response.data.msg,
+      });
+    }
+  };
+};
+
 export const profileUpdate = (userData) => {
   return async (dispatch) => {
     try {
