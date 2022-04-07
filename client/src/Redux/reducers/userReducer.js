@@ -11,6 +11,9 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_USER_FAIL,
   LOGOUT_USER_SUCCESS,
+  RESET_PASSWORD_FAIL,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
   SIGNUP_BEGIN,
   SIGNUP_FAIL,
   SIGNUP_SUCCESS,
@@ -131,6 +134,7 @@ export const profileReducer = (state = {}, action) => {
 export const forgotPassword = (state = {}, action) => {
   switch (action.type) {
     case FORGOT_PASSWORD_REQUEST:
+    case RESET_PASSWORD_REQUEST:
       return {
         ...state,
         isLoading: true,
@@ -143,7 +147,15 @@ export const forgotPassword = (state = {}, action) => {
         message: action.payload.message,
       };
 
+    case RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        success: action.payload.success,
+      };
+
     case FORGOT_PASSWORD_FAIL:
+    case RESET_PASSWORD_FAIL:
       return {
         ...state,
         isLoading: false,

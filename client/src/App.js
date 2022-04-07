@@ -14,6 +14,7 @@ import ProtectedRoute from './pages/authentication/ProtectedRoute';
 import UpdateProfile from './pages/authentication/UpdateProfile';
 import UpdatePassword from './pages/authentication/UpdatePassword';
 import ForgotPassword from './pages/authentication/ForgotPassword';
+import ResetPassword from './pages/authentication/ResetPassword';
 
 const App = () => {
   useEffect(() => {
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="/profile/update" element={<UpdateProfile />} />
           <Route path="/password/update" element={<UpdatePassword />} />
           <Route path="/password/forgot" element={<ForgotPassword />} />
+          <Route path="/reset/:token" element={<ResetPassword />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
         <Footer />

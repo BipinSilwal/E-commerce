@@ -21,6 +21,9 @@ import {
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAIL,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAIL,
 } from '../constant/userConstant';
 
 export const loginUser = (currentUser) => {
@@ -170,6 +173,30 @@ export const passwordForgot = (email) => {
     } catch (error) {
       dispatch({
         type: FORGOT_PASSWORD_FAIL,
+        payload: error.response.data.msg,
+      });
+      console.log(error);
+    }
+  };
+};
+
+export const passwordReset = (currentPassword, token) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: RESET_PASSWORD_REQUEST });
+      const { data } = await axios.put(
+        `/api/v1/reset/${token}`,
+        currentPassword
+      );
+      console.log(data);
+
+      dispatch({
+        type: RESET_PASSWORD_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: RESET_PASSWORD_FAIL,
         payload: error.response.data.msg,
       });
       console.log(error);
