@@ -18,6 +18,9 @@ import {
   USER_PROFILE_BEGIN,
   USER_PROFILE_FAIL,
   USER_PROFILE_SUCCESS,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAIL,
 } from '../constant/userConstant';
 
 export const loginUser = (currentUser) => {
@@ -149,6 +152,27 @@ export const logOut = () => {
         type: LOGOUT_USER_FAIL,
         payload: error.response.data.msg,
       });
+    }
+  };
+};
+
+export const passwordForgot = (email) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: FORGOT_PASSWORD_REQUEST });
+      const { data } = await axios.post(`/api/v1/password/forgot`, email);
+      console.log(data);
+
+      dispatch({
+        type: FORGOT_PASSWORD_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: FORGOT_PASSWORD_FAIL,
+        payload: error.response.data.msg,
+      });
+      console.log(error);
     }
   };
 };
