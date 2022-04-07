@@ -5,13 +5,18 @@ import {
   productReducer,
   singleProductReducer,
 } from './Redux/reducers/productReducer';
-import { profileReducer, userReducer } from './Redux/reducers/userReducer';
+import {
+  forgotPassword,
+  profileReducer,
+  userReducer,
+} from './Redux/reducers/userReducer';
 
 const reducer = combineReducers({
   products: productReducer,
   singleProduct: singleProductReducer,
   auth: userReducer,
   profileDetails: profileReducer,
+  forgot: forgotPassword,
 });
 
 let initialState = {};
